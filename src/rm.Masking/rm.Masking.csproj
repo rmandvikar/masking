@@ -15,4 +15,8 @@
     <Company>hippy</Company>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="rm.Extensions" Version="2.8.0" />
+  </ItemGroup>
+
 </Project>
