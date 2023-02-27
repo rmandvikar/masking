@@ -1,15 +1,14 @@
-﻿namespace rm.Masking
+﻿namespace rm.Masking;
+
+/// <summary>
+/// Defines impl for masking.
+/// </summary>
+public interface IMaskValue
 {
 	/// <summary>
-	/// Defines impl for masking.
+	/// Mask <paramref name="value"/>.
+	/// <para></para>
+	/// <see href="https://en.wikipedia.org/wiki/Data_masking#Masking_out">source</see>
 	/// </summary>
-	public interface IMaskValue
-	{
-		/// <summary>
-		/// Mask <paramref name="value"/>.
-		/// <para></para>
-		/// <see href="https://en.wikipedia.org/wiki/Data_masking#Masking_out">source</see>
-		/// </summary>
-		string Mask(string value);
-	}
+	string Mask(string value);
 }

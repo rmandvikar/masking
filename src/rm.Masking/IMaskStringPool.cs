@@ -1,13 +1,12 @@
-﻿namespace rm.Masking
+﻿namespace rm.Masking;
+
+/// <summary>
+/// Defines methods for a string pool containing masked strings.
+/// </summary>
+public interface IMaskStringPool
 {
 	/// <summary>
-	/// Defines methods for a string pool containing masked strings.
+	/// Returns masked string for the given <paramref name="maskLength"/>.
 	/// </summary>
-	public interface IMaskStringPool
-	{
-		/// <summary>
-		/// Returns masked string for the given <paramref name="maskLength"/>.
-		/// </summary>
-		string GetString(int maskLength);
-	}
+	string GetString(int maskLength);
 }

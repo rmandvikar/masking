@@ -1,36 +1,35 @@
-﻿namespace rm.Masking
+﻿namespace rm.Masking;
+
+/// <summary>
+/// A masking impl compressing length.
+/// </summary>
+public class CompressLengthMask : IMaskValue
 {
-	/// <summary>
-	/// A masking impl compressing length.
-	/// </summary>
-	public class CompressLengthMask : IMaskValue
+	private readonly char maskCharacter;
+
+	internal const char DefaultMaskCharacter = '*';
+
+	// reduce GC pressure for first N strings
+	internal const int MaskStringPoolSize = 100;
+	private readonly IMaskStringPool maskStringPool;
+
+	public CompressLengthMask(
+		char maskCharacter = DefaultMaskCharacter)
 	{
-		private readonly char maskCharacter;
+		this.maskCharacter = maskCharacter;
 
-		internal const char DefaultMaskCharacter = '*';
+		maskStringPool = new CompressLengthMaskStringPool(MaskStringPoolSize, this.maskCharacter);
+	}
 
-		// reduce GC pressure for first N strings
-		internal const int MaskStringPoolSize = 100;
-		private readonly IMaskStringPool maskStringPool;
-
-		public CompressLengthMask(
-			char maskCharacter = DefaultMaskCharacter)
+	/// <inheritdoc/>
+	public string Mask(string s)
+	{
+		if (s == null)
 		{
-			this.maskCharacter = maskCharacter;
-
-			maskStringPool = new CompressLengthMaskStringPool(MaskStringPoolSize, this.maskCharacter);
+			return s;
 		}
-
-		/// <inheritdoc/>
-		public string Mask(string s)
-		{
-			if (s == null)
-			{
-				return s;
-			}
-			var maskedLength = s.Length;
-			return maskStringPool.GetString(maskedLength) ??
-				(maskedLength >= 3 ? $"{maskCharacter}{maskedLength}{maskCharacter}" : new string(maskCharacter, maskedLength));
-		}
+		var maskedLength = s.Length;
+		return maskStringPool.GetString(maskedLength) ??
+			(maskedLength >= 3 ? $"{maskCharacter}{maskedLength}{maskCharacter}" : new string(maskCharacter, maskedLength));
 	}
 }

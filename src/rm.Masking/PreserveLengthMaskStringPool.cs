@@ -1,41 +1,40 @@
 ﻿using System;
 
-namespace rm.Masking
+namespace rm.Masking;
+
+/// <inheritdoc cref="IMaskStringPool"/>
+public class PreserveLengthMaskStringPool : IMaskStringPool
 {
-	/// <inheritdoc cref="IMaskStringPool"/>
-	public class PreserveLengthMaskStringPool : IMaskStringPool
+	private readonly string[] pool;
+
+	public PreserveLengthMaskStringPool(
+		byte size,
+		char maskCharacter)
 	{
-		private readonly string[] pool;
-
-		public PreserveLengthMaskStringPool(
-			byte size,
-			char maskCharacter)
+		if (size < 0)
 		{
-			if (size < 0)
-			{
-				throw new ArgumentOutOfRangeException(nameof(size), size, null);
-			}
-
-			pool = new string[size + 1];
-			BuildPool(maskCharacter);
+			throw new ArgumentOutOfRangeException(nameof(size), size, null);
 		}
 
-		private void BuildPool(char maskCharacter)
-		{
-			for (int i = 0; i < pool.Length; i++)
-			{
-				pool[i] = new string(maskCharacter, i);
-			}
-		}
+		pool = new string[size + 1];
+		BuildPool(maskCharacter);
+	}
 
-		/// <inheritdoc/>
-		public string GetString(int length)
+	private void BuildPool(char maskCharacter)
+	{
+		for (int i = 0; i < pool.Length; i++)
 		{
-			if (length < 0)
-			{
-				throw new ArgumentOutOfRangeException(nameof(length), length, null);
-			}
-			return length < pool.Length ? pool[length] : null;
+			pool[i] = new string(maskCharacter, i);
 		}
+	}
+
+	/// <inheritdoc/>
+	public string GetString(int length)
+	{
+		if (length < 0)
+		{
+			throw new ArgumentOutOfRangeException(nameof(length), length, null);
+		}
+		return length < pool.Length ? pool[length] : null;
 	}
 }
