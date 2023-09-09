@@ -20,7 +20,7 @@ internal class PerfTests
 	[Test]
 	public void Perf_PreserveLengthMask()
 	{
-		Perf_Mask(new PreserveLengthMask());
+		Perf_Mask(new PreserveLengthWithMaxLengthMask());
 	}
 
 	[Explicit]

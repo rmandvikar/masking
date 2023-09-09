@@ -4,7 +4,7 @@ using rm.Masking;
 namespace rm.MaskingTest;
 
 [TestFixture]
-public class PreserveLengthMaskTests
+public class PreserveLengthWithMaxLengthMaskTests
 {
 	[TestFixture]
 	public class Mask
@@ -23,7 +23,23 @@ public class PreserveLengthMaskTests
 		[TestCase(null, null)]
 		public void Masks_Correctly(string s, string maskedExpected)
 		{
-			var mask = new PreserveLengthMask();
+			var mask = new PreserveLengthWithMaxLengthMask();
+			var masked = mask.Mask(s);
+			Assert.AreEqual(maskedExpected, masked);
+		}
+
+		[Test]
+		[TestCase("123456", "***")]
+		[TestCase("12345", "***")]
+		[TestCase("1234", "***")]
+		[TestCase("123", "***")]
+		[TestCase("12", "**")]
+		[TestCase("1", "*")]
+		[TestCase("", "")]
+		[TestCase(null, null)]
+		public void Masks_Correctly_When_MaxMaskLength_Specified(string s, string maskedExpected)
+		{
+			var mask = new PreserveLengthWithMaxLengthMask(maxMaskLength: 3);
 			var masked = mask.Mask(s);
 			Assert.AreEqual(maskedExpected, masked);
 		}
@@ -32,7 +48,7 @@ public class PreserveLengthMaskTests
 		[TestCase("12345", $"xxxxx")]
 		public void Masks_Correctly_When_Mask_Specified(string s, string maskedExpected)
 		{
-			var mask = new PreserveLengthMask(DifferentMaskCharacter);
+			var mask = new PreserveLengthWithMaxLengthMask(DifferentMaskCharacter);
 			var masked = mask.Mask(s);
 			Assert.AreEqual(maskedExpected, masked);
 		}
