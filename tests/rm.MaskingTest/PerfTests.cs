@@ -25,6 +25,13 @@ internal class PerfTests
 
 	[Explicit]
 	[Test]
+	public void Perf_PreserveLengthWithMaxLengthMask()
+	{
+		Perf_Mask(new PreserveLengthWithMaxLengthMask());
+	}
+
+	[Explicit]
+	[Test]
 	public void Perf_ShowLastNCharsPreserveLengthMask()
 	{
 		Perf_Mask(new ShowLastNCharsPreserveLengthMask());
