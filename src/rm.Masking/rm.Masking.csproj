@@ -8,6 +8,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591;NU1507</NoWarn>
     <LangVersion>latest</LangVersion>
+    <PackageId>rmandvikar.Masking</PackageId>
     <Description>Provides masking methods.</Description>
     <PackageTags>masking</PackageTags>
     <RepositoryUrl>https://github.com/rmandvikar/masking</RepositoryUrl>
@@ -17,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="rm.Extensions" />
+    <PackageReference Include="rmandvikar.Extensions" />
   </ItemGroup>
 
 </Project>
